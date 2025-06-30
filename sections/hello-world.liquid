@@ -5,7 +5,7 @@
 <div class="welcome full-width">
   <div class="welcome-content">
     <div>
-      <h1>Hello, World!</h1>
+      <h1>{{ section.settings.hero_title }}</h1>
 
       <p class="welcome-description">
         The Skeleton theme is a minimal, carefully structured Shopify theme designed to help you quickly get started.
@@ -133,7 +133,15 @@
 {% schema %}
 {
   "name": "Hello World",
-  "settings": [],
+  "settings": [
+    {
+      "id": "hero_title",
+      "type": "text",
+      "label": "Hero Title",
+      "default": "Best Place To Find Quality Hoodies",
+      "info": "Enter the main heading for your hero section"
+    }
+  ],
   "presets": [
     {
       "name": "Hello World Template",
