@@ -30,8 +30,20 @@ This theme follows Shopify's best practices with:
 ### Setup
 
 1. Clone this repository
-2. Install Shopify CLI
-3. Run `shopify theme dev` to start development server
+2. Install Shopify CLI -> npm install -g @shopify/cli @shopify/theme
+3. Authenticate with Shopify -> shopify login --store your-store-name.myshopify.com
+4. Run `shopify theme dev` to start development server
+5. (Optional) Install Any Additional Tools
+    • If you use Tailwind, PostCSS, or other build tools, install Node.js and run:
+        npm install
+        npm run dev
+    (Only if your theme uses these tools!)
+6. Edit and Develop
+    • Open the project in VS Code or your preferred editor.
+    • Make changes to sections, templates, assets, etc.
+    • Preview changes live in the browser.
+7. Push Changes to Shopify (if needed) -> shopify theme push
+
 
 ### Structure
 
