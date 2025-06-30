@@ -1,0 +1,29 @@
+{
+	"name": "clothing-store-theme",
+	"version": "1.0.0",
+	"description": "A custom Shopify theme for clothing stores, built with modern Shopify 2.0 architecture. This theme is designed to provide a beautiful, flexible, and merchant-friendly e-commerce experience.",
+	"main": "index.js",
+	"scripts": {
+		"dev": "shopify theme dev",
+		"push": "shopify theme push",
+		"pull": "shopify theme pull",
+		"deploy": "shopify theme deploy",
+		"check": "shopify theme check",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/devzdevelop/clothing-store-theme.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/devzdevelop/clothing-store-theme/issues"
+	},
+	"homepage": "https://github.com/devzdevelop/clothing-store-theme#readme",
+	"dependencies": {
+		"@shopify/cli": "^3.81.2",
+		"@shopify/theme": "^3.58.2"
+	}
+}

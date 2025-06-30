@@ -24,26 +24,51 @@ This theme follows Shopify's best practices with:
 
 ### Prerequisites
 
-- [Shopify CLI](https://shopify.dev/docs/api/shopify-cli)
+- [Node.js](https://nodejs.org/) (v16 or higher)
 - [Shopify Liquid VS Code Extension](https://shopify.dev/docs/storefronts/themes/tools/shopify-liquid-vscode) (recommended)
 
 ### Setup
 
 1. Clone this repository
-2. Install Shopify CLI -> npm install -g @shopify/cli @shopify/theme
-3. Authenticate with Shopify -> shopify login --store your-store-name.myshopify.com
-4. Run `shopify theme dev` to start development server
-5. (Optional) Install Any Additional Tools
-    • If you use Tailwind, PostCSS, or other build tools, install Node.js and run:
-        npm install
-        npm run dev
-    (Only if your theme uses these tools!)
-6. Edit and Develop
-    • Open the project in VS Code or your preferred editor.
-    • Make changes to sections, templates, assets, etc.
-    • Preview changes live in the browser.
-7. Push Changes to Shopify (if needed) -> shopify theme push
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Authenticate with Shopify:
+   ```bash
+   npx shopify login --store your-store-name.myshopify.com
+   ```
+4. Start development server:
+   ```bash
+   npm run dev
+   ```
+   Or use the direct command:
+   ```bash
+   npx shopify theme dev
+   ```
 
+### Available Scripts
+
+- `npm run dev` - Start development server with live reload
+- `npm run push` - Push theme changes to Shopify
+- `npm run pull` - Pull theme changes from Shopify
+- `npm run deploy` - Deploy theme to production
+- `npm run check` - Check theme for issues
+
+### Development Workflow
+
+1. **Edit and Develop**
+   - Open the project in VS Code or your preferred editor
+   - Make changes to sections, templates, assets, etc.
+   - Preview changes live in the browser at `http://127.0.0.1:9292`
+
+2. **Theme Editor Sync**
+   - Use `--theme-editor-sync` flag to sync Theme Editor changes back to local files
+   - Example: `npx shopify theme dev --theme-editor-sync`
+
+3. **Push Changes**
+   - Use `npm run push` to upload your theme to Shopify
+   - Or use `npx shopify theme push` for more control
 
 ### Structure
 
