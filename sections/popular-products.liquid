@@ -1,0 +1,99 @@
+{% comment %}
+  Popular Products Section
+{% endcomment %}
+
+<div class="popular-products full-width">
+  <div class="flex flex-col gap-14 p-6 md:p-8 lg:p-16 bg-white">
+    <h2 class="text-5xl font-medium">Together for healthy skin.</h2>
+    <div class="flex flex-col gap-6">
+      <div class="flex justify-between items-center">
+        <div class="flex flex-col gap-6 w-full">
+          {% comment %} Product Title & View All Products {% endcomment %}
+          <div class="flex justify-between">
+            <h4 class="text-lg !font-semibold">{{ section.settings.section_title }}</h4>
+            <a href="#" class="text-lg font-medium underline">
+              <span class="font-poppins flex gap-1 group !font-semibold">
+                View all products
+                <svg
+                  class="inline-block w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </span>
+            </a>
+          </div>
+          {% comment %} Product Grid {% endcomment %}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for product in collections.all.products limit: 4 %}
+              <div class="flex flex-col product-card w-full h-fit">
+                {% if product.featured_image %}
+                  <div class="relative">
+                    <img
+                      src="{{ product.featured_image | img_url: '1920x1080' }}"
+                      alt="{{ product.title }}"
+                      width="1920"
+                      height="1080"
+                      class="bg-[#F5F2F2] w-full h-full object-cover"
+                    >
+                    <div class="absolute top-1.5 left-2 flex gap-2 text-black/80 text-base ">
+                      <span class="bg-white rounded-sm py-1 px-2 font-medium"> New </span>
+                      <span class="bg-white rounded-sm py-1 px-2 font-medium"> Save: $15 </span>
+                    </div>
+                  </div>
+                  <div class="bottom-2 left-2 text-black/80 text-base rounded-sm p-1 flex gap-2">
+                    <span class="text-lg font-medium"> {{ product.title }}: </span>
+                    <span class="text-lg font-medium">
+                      {{ product.price | money }}
+                    </span>
+                    {% if product.compare_at_price %}
+                      <span class="text-lg text-gray-500 line-through"> {{ product.compare_at_price | money }} </span>
+                    {% endif %}
+                  </div>
+                {% else %}
+                  <div class="w-full h-full flex items-center justify-center bg-gray-100">
+                    <span class="bg-white text-gray-400 text-lg">No image</span>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Popular Products",
+  "settings": [
+    {
+      "id": "section_title",
+      "type": "text",
+      "label": "Section Title",
+      "default": "Popular Products",
+      "info": "Enter the title for this section"
+    },
+    {
+      "id": "section_description",
+      "type": "textarea",
+      "label": "Section Description",
+      "default": "Discover our most loved products",
+      "info": "Enter a description for this section"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popular Products",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

@@ -1,11 +1,13 @@
 {% comment %}
   Welcome to Shopify theme development!
 {% endcomment %}
-
+{% assign color = section.settings.section_color %}
 <div class="welcome full-width">
   <div class="welcome-content">
     <div>
-      <h1>{{ section.settings.hero_title }}</h1>
+      <h2 class="text-5xl {{ color }}">
+        {{ section.settings.hero_title }}
+      </h2>
 
       <p class="welcome-description">
         The Skeleton theme is a minimal, carefully structured Shopify theme designed to help you quickly get started.
@@ -84,7 +86,7 @@
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(3, 1fr);
-    margin-top: 50px;
+    margin: 50px 0;
   }
 
   @media (max-width: 1100px) {
@@ -140,6 +142,31 @@
       "label": "Hero Title",
       "default": "Best Place To Find Quality Hoodies",
       "info": "Enter the main heading for your hero section"
+    },
+    {
+      "id": "section_color",
+      "type": "select",
+      "label": "Section Color",
+      "options": [
+        {
+          "value": "text-black",
+          "label": "Black"
+        },
+        {
+          "value": "text-white",
+          "label": "White"
+        },
+        {
+          "value": "text-gray-600",
+          "label": "Gray"
+        },
+        {
+          "value": "text-blue-600",
+          "label": "Blue"
+        }
+      ],
+      "default": "text-black",
+      "info": "Choose the background color for this section"
     }
   ],
   "presets": [
