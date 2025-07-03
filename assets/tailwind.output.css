@@ -221,6 +221,9 @@
       max-width: 96rem;
     }
   }
+  .mx-auto {
+    margin-inline: auto;
+  }
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
@@ -307,6 +310,9 @@
   }
   .bg-\[\#F5F2F2\] {
     background-color: #F5F2F2;
+  }
+  .bg-black {
+    background-color: var(--color-black);
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);

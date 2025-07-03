@@ -33,10 +33,11 @@ This theme follows Shopify's best practices with:
 2. Install dependencies:
    ```bash
    npm install
+   npm install -g @shopify/cli @shopify/theme
    ```
 3. Authenticate with Shopify:
    ```bash
-   npx shopify login --store your-store-name.myshopify.com
+   shopify theme dev --store clothing-store-db.myshopify.com
    ```
 4. Start development server:
    ```bash

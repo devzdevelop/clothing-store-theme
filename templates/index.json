@@ -10,16 +10,11 @@
 {
   "sections": {
       "main": {
-        "type": "hello-world",
+        "type": "hero-section",
         "settings": {}
       },
-      "popular-products": {
-        "type": "popular-products",
-        "settings": {}
-      }
   },
   "order": [
-  "main",
-    "popular-products"
+  "main"
   ]
 }
