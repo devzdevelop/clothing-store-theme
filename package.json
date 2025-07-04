@@ -4,7 +4,8 @@
 	"description": "A custom Shopify theme for clothing stores, built with modern Shopify 2.0 architecture. This theme is designed to provide a beautiful, flexible, and merchant-friendly e-commerce experience.",
 	"main": "index.js",
 	"scripts": {
-		"dev": "concurrently \"shopify theme dev\" \"npx tailwindcss -i ./assets/tailwind.input.css -o ./assets/tailwind.output.css --watch --config ./tailwind.config.js\"",
+		"dev": "concurrently \"shopify theme dev --store clothing-store-db.myshopify.com --live-reload=off\" \"npx tailwindcss -i ./assets/tailwind.input.css -o ./assets/tailwind.output.css --watch --config ./tailwind.config.js\"",
+		"dev:local": "concurrently \"shopify theme dev --store clothing-store-db.myshopify.com --live-reload=off --no-sync\" \"npx tailwindcss -i ./assets/tailwind.input.css -o ./assets/tailwind.output.css --watch --config ./tailwind.config.js\"",
 		"build": "npx tailwindcss -i ./assets/tailwind.input.css -o ./assets/tailwind.output.css --config ./tailwind.config.js --minify",
 		"push": "shopify theme push",
 		"pull": "shopify theme pull",

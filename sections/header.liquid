@@ -1,56 +1,322 @@
-<header class="width-full">
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+<header class="full-width px-4 md:px-6 lg:px-8 xl:px-16 border-b border-black/20">
+  <!-- Mobile Header -->
+  <div class="md:hidden flex items-center justify-between w-full py-4">
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-toggle p-2" aria-label="Toggle menu" aria-expanded="false">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
+    <!-- Mobile Logo -->
+    <h5 class="header__title !font-poppins font-semibold uppercase text-lg">
+      {{ shop.name | link_to: routes.root_url }}
+    </h5>
+
+    <!-- Mobile Icons -->
+    <div class="flex items-center gap-3">
+      <a href="/search" class="header__icon-search" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" class="w-6 h-6">
+          <circle cx="9" cy="9" r="4.75" stroke="currentColor" stroke-width="var(--icon-stroke-width)"/>
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="m12.5 12.5 3.25 3.25"/>
+        </svg>
+      </a>
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" aria-label="Account">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
+      {% endif %}
+      <a href="{{ routes.cart_url }}" class="relative" aria-label="Cart">
+        {% if cart.item_count > 0 %}
+          <sup class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            {{- cart.item_count -}}
+          </sup>
+        {% endif %}
+        {{ 'icon-cart.svg' | inline_asset_content }}
+      </a>
+    </div>
   </div>
 
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      {{ 'icon-account.svg' | inline_asset_content | link_to: routes.account_url }}
-    {% endif %}
+  <!-- Desktop Header -->
+  <div class="hidden md:flex items-center justify-between w-full h-full py-4">
+    <!-- Desktop Logo -->
+    <h5 class="header__title !font-poppins font-semibold uppercase text-xl lg:text-xl">
+      {{ shop.name | link_to: routes.root_url }}
+    </h5>
 
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
+    <!-- Desktop Navigation -->
+    <div class="header__menu nav-links flex justify-center gap-4 lg:gap-6 xl:gap-6">
+      {% if section.settings.menu.links.size > 0 %}
+        {% for link in section.settings.menu.links %}
+          <a
+            href="{{ link.url }}"
+            class="nav-link px-2 py-1 hover:underline transition-colors duration-150"
+          >
+            {% assign class = ' text-sm lg:text-base' %}
+            {% if link.url == request.path %}
+              {% assign class = ' text-sm lg:text-base font-bold' %}
+            {% endif %}
+            <p class="{{ class }}">{{ link.title }}</p>
+          </a>
+        {% endfor %}
+      {% else %}
+        <a
+          href="/"
+          class="nav-link px-2 py-1 hover:underline hover:text-black transition-colors duration-150 text-sm lg:text-base"
+          >Home</a
+        >
+        <a
+          href="/collections/all"
+          class="nav-link px-2 py-1 hover:underline transition-colors duration-150 text-sm lg:text-base"
+          >Catalog</a
+        >
+        <a
+          href="/contact"
+          class="nav-link px-2 py-1 hover:underline transition-colors duration-150 text-sm lg:text-base"
+          >Contact</a
+        >
       {% endif %}
+    </div>
 
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
+    <!-- Desktop Icons -->
+    <div class="header__icons flex justify-end gap-4 lg:gap-6">
+      <a href="/search" class="header__icon-search" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" class="w-6 h-6 lg:w-8 lg:h-8">
+          <circle cx="9" cy="9" r="4.75" stroke="currentColor" stroke-width="var(--icon-stroke-width)"/>
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="m12.5 12.5 3.25 3.25"/>
+        </svg>
+      </a>
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" aria-label="Account">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
+      {% endif %}
+      <a href="{{ routes.cart_url }}" class="relative" aria-label="Cart">
+        {% if cart.item_count > 0 %}
+          <sup class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            {{- cart.item_count -}}
+          </sup>
+        {% endif %}
+        {{ 'icon-cart.svg' | inline_asset_content }}
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+  <!-- Mobile Menu Panel -->
+  <div class="mobile-menu-panel fixed top-0 left-0 h-full w-80 max-w-[80vw] bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+    <div class="flex flex-col h-full">
+      <!-- Mobile Menu Header -->
+      <div class="flex items-center justify-between p-4 border-b border-gray-200">
+        <h5 class="!font-poppins font-semibold uppercase text-lg text-white">
+          {{ shop.name | link_to: routes.root_url }}
+        </h5>
+        <button class="mobile-menu-close p-2" aria-label="Close menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Navigation -->
+      <nav class="flex-1 p-4">
+        <ul class="space-y-4">
+          {% if section.settings.menu.links.size > 0 %}
+            {% for link in section.settings.menu.links %}
+              <li>
+                <a href="{{ link.url }}" class="block py-2 text-lg hover:text-gray-600 transition-colors duration-150">
+                  {% if link.url == request.path %}
+                    <span class="font-bold">{{ link.title }}</span>
+                  {% else %}
+                    {{ link.title }}
+                  {% endif %}
+                </a>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li><a href="/" class="block py-2 text-lg hover:text-gray-600 transition-colors duration-150">Home</a></li>
+            <li>
+              <a href="/collections/all" class="block py-2 text-lg hover:text-gray-600 transition-colors duration-150"
+                >Catalog</a
+              >
+            </li>
+            <li>
+              <a href="/contact" class="block py-2 text-lg hover:text-gray-600 transition-colors duration-150"
+                >Contact</a
+              >
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+
+      <!-- Mobile Menu Footer -->
+      <div class="p-4 border-t border-gray-200">
+        <div class="flex items-center justify-center gap-6">
+          <a href="/search" class="p-2" aria-label="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" class="w-6 h-6">
+              <circle cx="9" cy="9" r="4.75" stroke="currentColor" stroke-width="var(--icon-stroke-width)"/>
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="m12.5 12.5 3.25 3.25"/>
+            </svg>
+          </a>
+          {% if shop.customer_accounts_enabled %}
+            <a href="{{ routes.account_url }}" class="p-2" aria-label="Account">
+              {{ 'icon-account.svg' | inline_asset_content }}
+            </a>
+          {% endif %}
+          <a href="{{ routes.cart_url }}" class="p-2 relative" aria-label="Cart">
+            {% if cart.item_count > 0 %}
+              <sup class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                {{- cart.item_count -}}
+              </sup>
+            {% endif %}
+            {{ 'icon-cart.svg' | inline_asset_content }}
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
 {% stylesheet %}
   header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    min-height: 4rem;
   }
+
+  /* Desktop styles */
+  @media (min-width: 768px) {
+    header {
+      min-height: 5rem;
+    }
+  }
+
   header a {
     position: relative;
-    text-decoration: none;
     color: var(--color-foreground);
   }
+
   header a sup {
     position: absolute;
     left: 100%;
     overflow: hidden;
     max-width: var(--page-margin);
   }
+
   header svg {
     width: 2rem;
   }
+
   header .header__menu,
   header .header__icons {
     display: flex;
-    gap: 1rem;
+  }
+
+  /* Mobile menu styles */
+  .mobile-menu-overlay.active {
+    display: block;
+  }
+
+  .mobile-menu-panel.active {
+    transform: translateX(0);
+  }
+
+  /* Prevent body scroll when menu is open */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* Responsive icon sizing */
+  @media (max-width: 767px) {
+    header svg {
+      width: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    header svg {
+      width: 2rem;
+    }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  class MobileMenu {
+    constructor() {
+      this.init();
+    }
+
+    init() {
+      const toggleButton = document.querySelector('.mobile-menu-toggle');
+      const closeButton = document.querySelector('.mobile-menu-close');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+      const panel = document.querySelector('.mobile-menu-panel');
+      const body = document.body;
+
+      if (!toggleButton || !closeButton || !overlay || !panel) return;
+
+      // Toggle menu
+      toggleButton.addEventListener('click', () => {
+        this.openMenu(overlay, panel, body);
+      });
+
+      // Close menu
+      closeButton.addEventListener('click', () => {
+        this.closeMenu(overlay, panel, body);
+      });
+
+      // Close on overlay click
+      overlay.addEventListener('click', () => {
+        this.closeMenu(overlay, panel, body);
+      });
+
+      // Close on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.closeMenu(overlay, panel, body);
+        }
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+          this.closeMenu(overlay, panel, body);
+        }
+      });
+    }
+
+    openMenu(overlay, panel, body) {
+      overlay.classList.add('active');
+      panel.classList.add('active');
+      body.classList.add('menu-open');
+
+      // Update aria attributes
+      const toggleButton = document.querySelector('.mobile-menu-toggle');
+      if (toggleButton) {
+        toggleButton.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    closeMenu(overlay, panel, body) {
+      overlay.classList.remove('active');
+      panel.classList.remove('active');
+      body.classList.remove('menu-open');
+
+      // Update aria attributes
+      const toggleButton = document.querySelector('.mobile-menu-toggle');
+      if (toggleButton) {
+        toggleButton.setAttribute('aria-expanded', 'false');
+      }
+    }
+  }
+
+  // Initialize mobile menu when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new MobileMenu());
+  } else {
+    new MobileMenu();
+  }
+{% endjavascript %}
 
 {% schema %}
 {

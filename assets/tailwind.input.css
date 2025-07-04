@@ -53,4 +53,10 @@
 		font-family: 'Poppins', sans-serif;
 		color: #000;
 	}
+
+	p,
+	a {
+		font-family: 'Inter', sans-serif;
+		color: #000;
+	}
 }
